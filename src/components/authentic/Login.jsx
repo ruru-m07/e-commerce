@@ -2,9 +2,10 @@ import React,{useEffect,useState} from 'react'
 import { useForm } from 'react-hook-form'
 import Input from '../Input';
 import Button from '../Button';
-import { fetchLogIn } from '../../FetchFunc/fetchApi';
+import { fetchLogIn,getCurrentUser } from '../../FetchFunc/fetchUserApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { login } from '../../store/storeSlice';
 
 function Login() {
   const { handleSubmit, register } = useForm()
@@ -13,11 +14,15 @@ function Login() {
   const [error, setError] = useState(null)
 
   const handelData = async(data) => {
+    // console.log(data.email, data.password);
     try {
       const logedIn = await fetchLogIn({email: data.email,password: data.password})
+      console.log(logedIn);
       if (logedIn) {
-        console.log(logedIn);
-        // navigate('/')
+        const currentUser = await getCurrentUser()
+        console.log(currentUser);
+        dispatch(login(currentUser.data.data))
+        navigate('/')
       }
     } catch (error) {
       console.log(error);      
@@ -26,11 +31,11 @@ function Login() {
   
   return (
     <form onSubmit={handleSubmit(handelData)}>
-      <div className='flex flex-col gap-4 bg-[#2943e7bc] w-[35%] rounded-md m-auto p-6 justify-center items-center mt-12'>
+      <div className='flex flex-col gap-4 bg-[#222327f9] w-[35%] rounded-md m-auto p-6 justify-center items-center mt-12'>
 
         <Input
           label="Your Email"
-          type="email"
+          type="text"
           placeholder="Name@Unknown.com"
           {...register("email")}
         />

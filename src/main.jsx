@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Signup from './components/signup/Signup.jsx'
-import Login from './components/login/Login.jsx'
-import Home from './components/home/Home.jsx'
+import { Home } from './components/index.js'
+import {Signup_page,Login_page} from './pages/index_page.js'
 import { store } from './store/store.js'
 import { Provider } from 'react-redux'
+import DeleteDb from './components/DeleteDb.jsx'
 // import Verification from './components/verification/Verification.jsx'
 
 const route = createBrowserRouter([
@@ -32,12 +32,16 @@ const route = createBrowserRouter([
 
       {
         path: '/login',
-        element: <Login />
+        element: <Login_page/>
       },
 
       {
         path: '/Signup',
-        element: <Signup />
+        element: <Signup_page/>
+      },
+      {
+        path: '/deleteDB',
+        element: <DeleteDb/>
       }
     ]
   }
