@@ -1,26 +1,39 @@
-import React from 'react'
-import Input from '../formCompo/Input'
-import FileUploader from '../formCompo/FileUploader'
+import React, { useState } from "react";
+import Input from "../formCompo/Input";
+import FileUploader from "../formCompo/FileUploader";
 // import DescEditor from './Editor'
-import { useForm } from 'react-hook-form'
-import Button from '../Button'
-import Select from '../formCompo/Select'
-import TextArea from './TextArea'
+import { useForm } from "react-hook-form";
+import Button from "../Button";
+import Select from "../formCompo/Select";
+import TextArea from "./TextArea";
 // import FilePondUploader from '../formCompo/FilePondUploader'
 
 function AddProducts() {
-
-  const { handleSubmit, register, control, getValues } = useForm()
+  const { handleSubmit, register, control, setValue } = useForm();
+  const [mainImage, setMainImage] = useState(null);
+  const [subImages, setSubImages] = useState([]);
 
   function ProductInfo(data) {
+    data.MainImage = mainImage;
+    data.SubImages = subImages;
     console.log(data);
   }
 
-  return (
-    <form className='p-4 flex flex-col gap-2' onSubmit={handleSubmit(ProductInfo)}>
+  function handleMainImageChange(e) {
+    setMainImage(e.target.files[0]);
+  }
 
-      <div className='flex w-[100%] gap-4'>
-        <div className='w-[50%] flex flex-col gap-3 border-[1px] p-2 rounded-lg'>
+  function handleSubImagesChange(e) {
+    setSubImages(Array.from(e.target.files));
+  }
+
+  return (
+    <form
+      className="p-4 flex flex-col gap-2"
+      onSubmit={handleSubmit(ProductInfo)}
+    >
+      <div className="flex w-[100%] gap-4">
+        <div className="w-[50%] flex flex-col gap-3 border-[1px] p-2 rounded-lg">
           <div>
             <Input
               type="text"
@@ -28,19 +41,15 @@ function AddProducts() {
               classname="border-[1px] outline-none rounded-[4px] px-[6px] h-[2rem]"
               {...register("productName", { required: true })}
             />
-
             <TextArea
               label="Description"
-              className='resize-none border-[1px] outline-none rounded-[4px] py-2 px-[6px]'
-              {...register("desc", {
-                required: true,
-              })}
+              className="resize-none border-[1px] outline-none rounded-[4px] py-2 px-[6px]"
+              {...register("desc", { required: true })}
             />
           </div>
         </div>
-
         <div>
-          <div className='border-[1px] p-2 w-[37rem] rounded-lg'>
+          <div className="border-[1px] p-2 w-[37rem] rounded-lg">
             <Select
               label="Category"
               classname="border-[1px] outline-none rounded-[4px] w-full px-[6px] h-[2rem]"
@@ -51,49 +60,40 @@ function AddProducts() {
                 { id: 4, catogery: "BRIEFCASE" },
                 { id: 5, catogery: "GYM BAG" },
               ]}
-
-              {...register("category", {
-                required: true,
-              })}
+              {...register("category", { required: true })}
             />
           </div>
-
-          <div className='flex gap-2'>
+          <div className="flex gap-2">
             <div>
               <FileUploader
-                // classname="w-[18rem]"
                 inputId="mainId"
                 imageSecClassName="flex justify-center items-center border-2 border-spacing-1 w-[12rem] h-[10rem] p-2"
                 label="Main image"
                 multiple={false}
-                {...register("MainImage")}
+                onChange={handleMainImageChange}
               />
             </div>
-
             <div>
               <FileUploader
                 classname="w-[5rem] h-[5rem]"
                 inputId="subId"
+                type="file"
                 imageSecClassName="flex justify-center items-center border-2 border-spacing-1 w-[25rem] h-[10rem] p-2"
                 label="Sub images"
                 multiple={true}
-                {...register("SubImages")}
+                onChange={handleSubImagesChange}
               />
             </div>
           </div>
-
         </div>
-
       </div>
-
-      <div className='w-[50%] flex flex-col gap-3 border-[1px] p-2 rounded-lg'>
+      <div className="w-[50%] flex flex-col gap-3 border-[1px] p-2 rounded-lg">
         <Input
           type="text"
           label="Price"
           classname="border-[1px] outline-none rounded-[4px] px-[6px] h-[2rem]"
           {...register("price", { required: true })}
         />
-
         <Input
           type="number"
           label="quantity"
@@ -103,14 +103,9 @@ function AddProducts() {
           {...register("quantity", { required: true })}
         />
       </div>
-
-      <Button
-        type="submit"
-        text="submit"
-      />
-
+      <Button type="submit" text="submit" />
     </form>
-  )
+  );
 }
 
-export default AddProducts
+export default AddProducts;
