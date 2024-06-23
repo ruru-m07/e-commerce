@@ -1,26 +1,29 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 import {useSelector} from 'react-redux'
-import { fetchAvailableUser } from '../../FetchFunc/fetchChatApi'
+import { getUserProfile } from '../../FetchFunc/fetchEcommerceApi'
 
 
 function Home() {
 
-  const [users, setUsers] = useState(second)
+  const [user, setUser] = useState([])
     
   async function fetch(params) {
-    const avaUser = await fetchAvailableUser()
-    console.log(avaUser);
+    const userProfile = await getUserProfile()
+    if (userProfile) {
+      setUser(userProfile.data)
+    }
   }
 
   useEffect(() => {
     fetch()
   }, [])
+
+  // console.log(user);
   
 
   return (
     <div>
-      
     </div>
   )
 }

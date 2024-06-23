@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "playwrite";
+    src: local("PlaywriteNZ-Regular"), url(./assets/fonts/static/PlaywriteNZ-Regular.ttf) format("truetype");
+}

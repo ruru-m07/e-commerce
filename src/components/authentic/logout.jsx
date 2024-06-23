@@ -16,7 +16,7 @@ function Logout() {
     console.log(loggedOut);
     if (loggedOut) {
       dispatch(storeLogout())
-      navigate("/login")
+      navigate("/")
     }
 
   }

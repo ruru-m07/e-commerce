@@ -15,8 +15,10 @@ function DeleteDb() {
 
 
   return (
-    // <button onClick={deleteDatabase}>DeleteDb</button>
-    <dir></dir>
+    <div>
+    {/* <button onClick={deleteDatabase}>DeleteDb</button> */}
+     <dir></dir>
+    </div>
   )
 }
 

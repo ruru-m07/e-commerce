@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Home } from './components/index.js'
-import {Signup_page,Login_page} from './pages/index_page.js'
+import {Signup_page,Login_page,AddProducts_page} from './pages/index_page.js'
 import { store } from './store/store.js'
 import { Provider } from 'react-redux'
 import DeleteDb from './components/DeleteDb.jsx'
@@ -25,10 +25,10 @@ const route = createBrowserRouter([
         element: <div>about</div>
       },
 
-      // {
-      //   path: '/verification',
-      //   element: <Verification/>
-      // },
+      {
+        path: '/add-products',
+        element: <AddProducts_page/>
+      },
 
       {
         path: '/login',

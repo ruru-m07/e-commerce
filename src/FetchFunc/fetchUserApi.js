@@ -5,9 +5,9 @@ async function fetchSignup(data) {
 
     const signupApi = 'http://localhost:8080/api/v1/users/register'
     const responce = await axios.post(signupApi, {
-        'username': String(data.username),
+        'username': String(data.username).toLowerCase(),
         'email': String(data.email),
-        'password': String(data.password)
+        'password': String(data.password),
     },)
 
     return responce
