@@ -1,8 +1,8 @@
 import React from 'react'
-import Button from '../Button'
+// import Button from '../index'
 import { logout } from '../../FetchFunc/fetchUserApi'
 import { useDispatch } from 'react-redux'
-import { logout as storeLogout } from '../../store/storeSlice'
+import { isLoggedIn, logout as storeLogout } from '../../store/userSlice'
 import { useNavigate } from 'react-router-dom'
 
 function Logout() {
@@ -15,7 +15,9 @@ function Logout() {
     const loggedOut = await logout()
     console.log(loggedOut);
     if (loggedOut) {
+      localStorage.removeItem("user")
       dispatch(storeLogout())
+      dispatch(isLoggedIn(false))
       navigate("/")
     }
 

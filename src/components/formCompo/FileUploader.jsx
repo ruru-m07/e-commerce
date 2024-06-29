@@ -24,17 +24,19 @@ const FileUploader = React.forwardRef(
 
     return (
       <div className="flex flex-col gap-4">
-        {label && <div>{label}</div>}
-        <div className={imageSecClassName}>
-          {fileUrl.length > 1
-            ? fileUrl.map((url, index) => (
+        <div className="mt-4">
+          {label && <div>{label}</div>}
+          <div className={imageSecClassName}>
+            {fileUrl.length > 1
+              ? fileUrl.map((url, index) => (
                 <div key={index} className="mx-2">
                   <img className={classname} src={url} alt="image" />
                 </div>
               ))
-            : fileUrl[0] && (
+              : fileUrl[0] && (
                 <img className={classname} src={fileUrl[0]} alt="image" />
               )}
+          </div>
         </div>
         <input
           id={inputId}

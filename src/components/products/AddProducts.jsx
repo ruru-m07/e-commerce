@@ -1,22 +1,37 @@
 import React, { useState } from "react";
 import Input from "../formCompo/Input";
 import FileUploader from "../formCompo/FileUploader";
-// import DescEditor from './Editor'
 import { useForm } from "react-hook-form";
-import Button from "../Button";
+import Button from "../formCompo/Button";
 import Select from "../formCompo/Select";
 import TextArea from "./TextArea";
-// import FilePondUploader from '../formCompo/FilePondUploader'
+import { createProducts, getAllProducts } from "../../FetchFunc/fetchEcommerceApi";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { products } from "../../store/productSlice";
 
 function AddProducts() {
   const { handleSubmit, register, control, setValue } = useForm();
   const [mainImage, setMainImage] = useState(null);
   const [subImages, setSubImages] = useState([]);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  function ProductInfo(data) {
-    data.MainImage = mainImage;
-    data.SubImages = subImages;
-    console.log(data);
+  async function ProductInfo(data) {
+
+    data.mainImage = mainImage;
+    data.subImages = subImages;
+    
+    if (data) {
+      const productData = await createProducts(data)
+      if (productData) {
+        const getProducts = await getAllProducts()
+        if (getProducts) {
+          dispatch(products(getProducts.data.data.products))
+          navigate("/")
+        }
+      }
+    }
   }
 
   function handleMainImageChange(e) {
@@ -54,11 +69,11 @@ function AddProducts() {
               label="Category"
               classname="border-[1px] outline-none rounded-[4px] w-full px-[6px] h-[2rem]"
               options={[
-                { id: 1, catogery: "BACKPACK" },
-                { id: 2, catogery: "WEEKEND BAG" },
-                { id: 3, catogery: "TOTE BAG" },
-                { id: 4, catogery: "BRIEFCASE" },
-                { id: 5, catogery: "GYM BAG" },
+                { id: "66792be56e9daa6ca03b5ab1", catogery: "Backpack" },
+                { id: "66792bdd6e9daa6ca03b5aad", catogery: "Clutch" },
+                { id: "66792bd56e9daa6ca03b5aa9", catogery: "Tote bag" },
+                { id: "66792bc46e9daa6ca03b5aa5", catogery: "Briefcase" },
+                { id: "66792ba36e9daa6ca03b5aa1", catogery: "GYM bag" },
               ]}
               {...register("category", { required: true })}
             />
@@ -67,7 +82,8 @@ function AddProducts() {
             <div>
               <FileUploader
                 inputId="mainId"
-                imageSecClassName="flex justify-center items-center border-2 border-spacing-1 w-[12rem] h-[10rem] p-2"
+                // classname="h-[5rem]"
+                imageSecClassName="flex justify-center items-center border-2 border-dashed w-[12rem] h-[10rem] p-2"
                 label="Main image"
                 multiple={false}
                 onChange={handleMainImageChange}
@@ -78,9 +94,10 @@ function AddProducts() {
                 classname="w-[5rem] h-[5rem]"
                 inputId="subId"
                 type="file"
-                imageSecClassName="flex justify-center items-center border-2 border-spacing-1 w-[25rem] h-[10rem] p-2"
+                imageSecClassName="flex justify-center items-center border-2 border-dashed w-[25rem] h-[10rem] p-2"
                 label="Sub images"
                 multiple={true}
+                max="4"
                 onChange={handleSubImagesChange}
               />
             </div>

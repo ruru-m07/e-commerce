@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Logout from '../authentic/logout';
 // import profile from '../../../public'
-import { Controller,useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 function Header() {
 
-    const authStatus = useSelector((state) => state.status)
-    const user = useSelector((state) => state.userData)
-    const [toggleProfile, setToggleProfile] = useState(false)
-    // console.log(authStatus);
+    const authStatus = useSelector((state) => state.auth.status)
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
+    // const [loading, setLoading] = useState(false)
+    const userData = useSelector((state) => state.auth.userData)
+    const [toggleProfile, setToggleProfile] = useState(false)
+    const isUserLocal = localStorage.getItem("user")
+    const isUser = JSON.parse(isUserLocal)
+    const [user, setUser] = useState(isUser)
     const [namefirstLatter, setNamefirstLatter] = useState("")
 
     const items = [
@@ -19,44 +23,49 @@ function Header() {
             id: 1,
             name: 'Shop',
             link: '/',
-            authentication: authStatus
+            authentication: isUser
         },
         {
             id: 2,
             name: 'About',
             link: '/about',
-            authentication: authStatus
+            authentication: isUser
         },
 
         {
             id: 3,
             name: 'Contact',
             link: '/contact',
-            authentication: authStatus
-        },
-
-        {
-            id: 5,
-            name: 'Login',
-            link: '/login',
-            authentication: !authStatus
+            authentication: isUser
         },
 
         // {
-        //     id: 6,
-        //     name: 'Add product',
-        //     link: '/add-product',
-        //     authentication: authStatus
+        //     id: 5,
+        //     name: 'Login',
+        //     link: '/login',
+        //     authentication: !authStatus
         // },
+        {
+            id: 6,
+            name: 'Categories',
+            link: '/category',
+            authentication: isUser
+        },
 
     ]
 
     function makeProfile(params) {
+        if (!user) {
+            setUser(userData)
+        }
+        
         if (user) {
+            console.log(user);
             const username = user.username;
             const userFirstName = username.split("")[0]
             setNamefirstLatter(userFirstName)
         }
+
     }
 
     function toggleProfileInfo(params) {
@@ -75,11 +84,9 @@ function Header() {
         makeProfile();
     })
 
-
-
     return (
         <>
-            <nav className="flex justify-between text-lg text-[#000] bg-[#fffffff9] p-7 pb-10 px-10 sticky">
+            <nav className="flex justify-between text-lg text-[#000] bg-[#fffffff9] p-7 px-10 sticky">
                 <div>
                     <Link to='/'>
                         <div className='font-playwriteRegular font-bold text-[26px]'>Morlex</div>
@@ -89,35 +96,38 @@ function Header() {
 
                 <div className='flex gap-7'>
                     {items.map((item) => (
-                        item.authentication &&
+                        isUser &&
                         <div key={item.id}>
 
                             <div className='flex gap-3 items-center'>
-                                {!authStatus &&
-                                    <Link to="/login"><img src="/profile.svg" alt="" srcSet="" /></Link>
-                                }
                                 <p><Link to={item.link}>{item.name}</Link></p>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                {authStatus &&
+                {!isUser &&
+                    <Link to="/login"><img src="/profile.svg" alt="" srcSet="" /></Link>
+                }
+
+                {isUser &&
 
                     <div>
 
                         <div className='flex gap-4'>
 
-                            <div>
+                            {user && user.role == "ADMIN" ? <div>
                                 <Link to="/add-products">
-                                Add products
+                                    Add products
                                 </Link>
-                            </div>
+                            </div> : null}
 
                             <div id='profile'>
 
                                 <button id='profile-icon' onClick={toggleProfileInfo} className='flex relative items-center gap-1 ml-[67px]'>
-                                    <div className='flex items-center bg-[#1f82e5] w-[26px] h-[25px] text-white justify-center rounded-full text-[18px]'>{namefirstLatter}</div>
+                                    <div className='flex items-center bg-[#1f82e5] w-[26px] h-[25px] text-white justify-center rounded-full text-[18px]'>
+                                        {namefirstLatter}
+                                    </div>
 
                                     <img src="/dropDown.svg" alt="" srcSet="" />
                                 </button>

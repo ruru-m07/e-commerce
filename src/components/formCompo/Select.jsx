@@ -7,8 +7,8 @@ function Select({ options, label,classname ,...props }, ref) {
             {label && <label>{label}</label>}
             {/* <div> */}
                 <select className={classname} ref={ref} name="" id="" {...props}>
-                    {options.map((option) => (
-                        <option key={option.id} value={option.catogery}>{option.catogery}</option>
+                    {options.map((option,index) => (
+                        <option key={index} value={option.id}>{option.catogery}</option>
                     ))}
                 </select>
             {/* </div> */}

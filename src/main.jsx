@@ -7,7 +7,9 @@ import { Home } from './components/index.js'
 import {Signup_page,Login_page,AddProducts_page} from './pages/index_page.js'
 import { store } from './store/store.js'
 import { Provider } from 'react-redux'
-import DeleteDb from './components/DeleteDb.jsx'
+import DeleteDb from './components/formCompo/DeleteDb.jsx'
+import AddCategory from './components/products/AddCategory.jsx'
+import GetCategory from './components/products/getCategory.jsx'
 // import Verification from './components/verification/Verification.jsx'
 
 const route = createBrowserRouter([
@@ -39,9 +41,17 @@ const route = createBrowserRouter([
         path: '/Signup',
         element: <Signup_page/>
       },
+      // {
+      //   path: '/deleteDB',
+      //   element: <DeleteDb/>
+      // },
+      // {
+      //   path: '/product:productId',
+      //   element: <Product/>
+      // },
       {
-        path: '/deleteDB',
-        element: <DeleteDb/>
+        path: '/get-category',
+        element: <GetCategory/>
       }
     ]
   }

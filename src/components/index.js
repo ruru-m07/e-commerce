@@ -1,5 +1,5 @@
 import Input from "./formCompo/Input.jsx";
-import Button from './Button.jsx';
+import Button from './formCompo/Button.jsx';
 import Header from "./header/Header";
 import Login from "./authentic/Login.jsx";
 import Signup from "./authentic/Signup.jsx";
