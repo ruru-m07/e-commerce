@@ -5,6 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Home } from './components/index.js'
 import {Signup_page,Login_page,AddProducts_page} from './pages/index_page.js'
+import {Product} from './components/index.js'
 import { store } from './store/store.js'
 import { Provider } from 'react-redux'
 import DeleteDb from './components/formCompo/DeleteDb.jsx'
@@ -45,10 +46,10 @@ const route = createBrowserRouter([
       //   path: '/deleteDB',
       //   element: <DeleteDb/>
       // },
-      // {
-      //   path: '/product:productId',
-      //   element: <Product/>
-      // },
+      {
+        path: '/product/:productId',
+        element: <Product/>
+      },
       {
         path: '/get-category',
         element: <GetCategory/>

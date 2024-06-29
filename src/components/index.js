@@ -7,6 +7,7 @@ import Logout from "./authentic/logout.jsx";
 import Home from "./home/Home.jsx";
 import AddProducts from "./products/AddProducts.jsx";
 import Select from "./formCompo/Select.jsx";
+import Product from "./products/Product.jsx";
 
 export {
     Input,
@@ -17,5 +18,6 @@ export {
     Logout,
     Home,
     AddProducts,
-    Select
+    Select,
+    Product
 }

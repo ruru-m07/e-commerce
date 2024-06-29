@@ -22,7 +22,7 @@ export const authStore = createSlice({
         },
 
         isLoggedIn: (state,action)=>{
-            console.log(action.payload);
+            // console.log(action.payload);
             state.isLoggedIn = action.payload
         }
 

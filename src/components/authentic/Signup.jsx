@@ -28,6 +28,7 @@ function Signup() {
 
           if (currentUser) {
             dispatch(login(currentUser.data.data))
+            localStorage.setItem("user",JSON.stringify(currentUser.data.data))
             dispatch(isLoggedIn(true))
             navigate('/')
           }

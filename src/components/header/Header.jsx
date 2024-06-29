@@ -9,14 +9,13 @@ function Header() {
 
     const authStatus = useSelector((state) => state.auth.status)
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-
     // const [loading, setLoading] = useState(false)
     const userData = useSelector((state) => state.auth.userData)
     const [toggleProfile, setToggleProfile] = useState(false)
     const isUserLocal = localStorage.getItem("user")
     const isUser = JSON.parse(isUserLocal)
     const [user, setUser] = useState(isUser)
-    const [namefirstLatter, setNamefirstLatter] = useState("")
+    const [namefirstLatter, setNamefirstLetter] = useState("")
 
     const items = [
         {
@@ -54,19 +53,21 @@ function Header() {
 
     ]
 
-    function makeProfile(params) {
-        if (!user) {
-            setUser(userData)
-        }
-        
-        if (user) {
-            console.log(user);
-            const username = user.username;
-            const userFirstName = username.split("")[0]
-            setNamefirstLatter(userFirstName)
+    useEffect(() => {
+        function makeProfile() {
+            if (userData) {
+                setUser(userData);
+            }
+
+            if (user) {
+                const username = user.username;
+                const userFirstName = username.charAt(0);
+                setNamefirstLetter(userFirstName);
+            }
         }
 
-    }
+        makeProfile();
+    }, [userData, user]);
 
     function toggleProfileInfo(params) {
         setToggleProfile(!toggleProfile)
@@ -80,9 +81,9 @@ function Header() {
         }
     })
 
-    useEffect(() => {
-        makeProfile();
-    })
+    // useEffect(() => {
+    //     makeProfile();
+    // })
 
     return (
         <>
@@ -100,7 +101,7 @@ function Header() {
                         <div key={item.id}>
 
                             <div className='flex gap-3 items-center'>
-                                <p><Link to={item.link}>{item.name}</Link></p>
+                                <p><Link className='roboto-medium' to={item.link}>{item.name}</Link></p>
                             </div>
                         </div>
                     ))}

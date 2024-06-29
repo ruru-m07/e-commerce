@@ -84,4 +84,19 @@ async function getAllProducts(params) {
     }
 }
 
-export { getUserProfile, createProducts, createCategory, getCategories,getAllProducts }
+async function getProduct(productId) {
+    console.log(productId);
+    try {
+        const api = `http://localhost:8080/api/v1/ecommerce/products/${productId}`
+
+        return await axios.get(api,{
+            headers: {
+                "Content-Type": "application/json",
+            },withCredentials:true
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { getUserProfile, createProducts, createCategory, getCategories, getAllProducts, getProduct }
